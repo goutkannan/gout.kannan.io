@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="blog.html"> &lt Back to main page </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -86,12 +86,7 @@
 
                 
 
-                <hr>
-
-                <!-- Preview Image -->
-                <img class="img-responsive" src="img/fnj.jpg" alt="">
-
-                <hr>
+                
 
                 <!-- Post Content -->
                 <p class="lead"></p>
@@ -104,14 +99,31 @@
                 By default each thread has its own stack, .txt, registers, program counters but shares the heap space. 
                 Hence the thread model is the base for Fork-Join parallelism.
                 </p>
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="img/fnj.jpg" alt="">
+
+                <hr>
                 <p>
-                    In order to learn multithreaded algortihms refer to <a href="https://mitpress.mit.edu/sites/default/files/titles/sample/0262533057chap27.pdf">chapter-27 of CLRS </a>(needless to say, buy CLRS)
+                    In order to learn multithreaded algortihms refer to <a href="https://mitpress.mit.edu/sites/default/files/titles/sample/0262533057chap27.pdf">chapter-27 of CLRS </a>(needless to say, buy CLRS). CLRS talks about acheiving parallelism using the keywords
+                    Parallel, Spawn, Sync. These contructs are followed in OpenMP pragramming too. 
 
                 </p>
                 <p>
                     <code>
                         #include&ltomp.h&gt
-                    </code>
+                    </code> declares two types of functions
+                    <ol>
+                        <li>
+                            Functions those are used to create a parallel environment and control the flow.
+                        </li>
+                        <li>
+                            Functions those are used to synchronize the data access. 
+                        </li>
+                    </ol>
+
+                    
                 </p>
 
                 <hr>
@@ -135,27 +147,11 @@
 
                 <!-- Comment -->
                 <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
                     
-                        <!-- End Nested Comment -->
-                    </div>
+                    
                 </div>
 
+                
             </div>
 
             <!-- Blog Sidebar Widgets Column -->
