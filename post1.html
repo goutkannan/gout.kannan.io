@@ -12,7 +12,7 @@
     <title>Blog Post - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -46,19 +46,7 @@
                 <a class="navbar-brand" href="blog.html"> &lt Back to main page </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
@@ -110,7 +98,7 @@
                     Parallel, Spawn, Sync. These contructs are followed in OpenMP pragramming too. 
 
                 </p>
-                <p>
+                <p>In this post let us consider C/C++ as the language used. (OpenMP works with Fortran too) 
                     <code>
                         #include&ltomp.h&gt
                     </code> declares two types of functions
@@ -120,8 +108,47 @@
                         </li>
                         <li>
                             Functions those are used to synchronize the data access. 
-                        </li>
+                       </li>
                     </ol>
+
+                    Magic <code> #pragma omp </code> is used tell the compiler to treat the code that follows this line, for parallel execution. 
+                    Consider the following code snippet and guess the output. 
+                    <br><br>
+                    <pre class=".pre-scrollable" style="display:auto" >
+                        <code>
+                        #include&ltomp.h&gt                                                                 
+                        #include&ltiostream&gt                                                              
+                        using namespace std;                                                            
+                        int main()                                                                      
+                        {                                                                               
+                            #pragma omp parallel                                                          
+                            {                                                                             
+                                cout<<"Start"<< endl;                                                    
+                                for(long i =0 ; i<1000;i++) ;                                   
+                                cout<<"End"<< endl;                                                      
+                            }                                                                  
+                        return 0;                                                                     
+                        }
+                        </code>
+                    </pre>
+                    The popular answer for the above code(on a dual core machine) would be  
+                    <samp> Start   End  Start  End </samp> which is not true always. Consider the case in which 'i' iterates over a huge number like 10000000, the second thread would have reached the Start statement befor the loop is completed.
+                    Hence the output is non-determinstic it is either <samp> Start Start End End </samp> OR  <samp> Start End Start End </samp>.
+                        </p>
+
+                     The above given code is targeted of g++ compiler. In addition to the normal compile syntax have to add <kbd> -fopemp </kbd> in the compile statement.  
+                     <p> Eg. <kbd> g++ sample.cpp -fopenmp -o  << binaryname >> </kbd>  </p>
+                    <p>
+                        Let us dive further and compute sum first 1000 numbers parallely.In addition to the previous <code> parallel </code> directive, we need a new directive to parallelize the for loop. 
+
+
+                    </p>
+
+                    
+
+
+                    
+
 
                     
                 </p>
@@ -146,8 +173,7 @@
                 <!-- Posted Comments -->
 
                 <!-- Comment -->
-                <div class="media">
-                    
+                <div class="media">               
                     
                 </div>
 
@@ -171,44 +197,10 @@
                     <!-- /.input-group -->
                 </div>
 
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
+               
+            
 
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
-
+                
             </div>
 
         </div>
