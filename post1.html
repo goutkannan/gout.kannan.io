@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post Getting started with OpenMP</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Custom CSS -->
+    <link href="css/blog-home.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="blog.html"> &lt Back to main page </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h1>Get started with OpenMP</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by <a href="blog.html">Goutham</a>
+                </p>
+
+                <hr>
+
+                
+
+                
+
+                <!-- Post Content -->
+                <p class="lead"></p>
+                <p>We will look into the most familiar parallel programming model "OpenMP" and its functionalities from a students view. 
+                We will then get our hands dirty by trying out few examples of parallel code 
+                </p>
+                <p>OpenMP is a shared memory programming model that can improve the preformance of the code.
+                Well that esclated quickly, From our basic operating systems course we know that threads shares the memory. 
+                A process that spawns two or more threads share memory used by it with the threads, So that the threads can effectively communicate.
+                By default each thread has its own stack, .txt, registers, program counters but shares the heap space. 
+                Hence the thread model is the base for Fork-Join parallelism.
+                </p>
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="img/fnj.jpg" alt="">
+
+                <hr>
+                <p>
+                    In order to learn multithreaded algortihms refer to <a href="https://mitpress.mit.edu/sites/default/files/titles/sample/0262533057chap27.pdf">chapter-27 of CLRS </a>(needless to say, buy CLRS). CLRS talks about acheiving parallelism using the keywords
+                    Parallel, Spawn, Sync. These contructs are followed in OpenMP pragramming too. 
+
+                </p>
+                <p>In this post let us consider C/C++ as the language used. (OpenMP works with Fortran too) 
+                    <code>
+                        #include&ltomp.h&gt
+                    </code> declares two types of functions
+                    <ol>
+                        <li>
+                            Functions those are used to create a parallel environment and control the flow.
+                        </li>
+                        <li>
+                            Functions those are used to synchronize the data access. 
+                       </li>
+                    </ol>
+
+                    Magic <code> #pragma omp </code> is used tell the compiler to treat the code that follows this line, for parallel execution. 
+                    Consider the following code snippet and guess the output. 
+                    <br><br>
+                    <pre class=".pre-scrollable" style="display:auto" >
+                        <code>
+                        #include&ltomp.h&gt                                                                 
+                        #include&ltiostream&gt                                                              
+                        using namespace std;                                                            
+                        int main()                                                                      
+                        {                                                                               
+                            #pragma omp parallel                                                          
+                            {                                                                             
+                                cout<<"Start"<< endl;                                                    
+                                for(long i =0 ; i<1000;i++) ;                                   
+                                cout<<"End"<< endl;                                                      
+                            }                                                                  
+                        return 0;                                                                     
+                        }
+                        </code>
+                    </pre>
+                    The popular answer for the above code(on a dual core machine) would be  
+                    <samp> Start   End  Start  End </samp> which is not true always. Consider the case in which 'i' iterates over a huge number like 10000000, the second thread would have reached the Start statement befor the loop is completed.
+                    Hence the output is non-determinstic it is either <samp> Start Start End End </samp> OR  <samp> Start End Start End </samp>.
+                        </p>
+
+                     The above given code is targeted of g++ compiler. In addition to the normal compile syntax have to add <kbd> -fopemp </kbd> in the compile statement.  
+                     <p> Eg. <kbd> g++ sample.cpp -fopenmp -o  << binaryname >> </kbd>  </p>
+                    <p>
+                        Let us dive further and compute sum first 1000 numbers parallely.In addition to the previous <code> parallel </code> directive, we need a new directive to parallelize the for loop. 
+                    </p>
+                    
+                    
+                </p>
+
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                <div class="media">               
+                    
+                </div>
+
+                
+            </div>
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+
+               
+            
+
+                
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/creative.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+</body>
+
+</html>
